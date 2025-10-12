@@ -1,0 +1,38 @@
+CISC 327 Assignment 1
+Name: Sandy Mourad
+Student ID: 20406862
+Group Number: 3
+
+
+My project implementation status:
+
+Requirement | Function Name                 | Status (Complete/Partial) | What is Missing / Bug 
+------------|-------------------------------|---------------------------|--------------------------------------------------------
+R1          | `add_book_to_catalog`         | Complete                  | Works correctly with validation. Duplicate ISBNs are blocked as expected.  
+R2          | `get_all_books`               | Complete                  | Catalog display works; schema and availability checks pass.  
+R3          | `borrow_book_by_patron`       | Partial                   | Core borrowing logic works, but bug allows a 6th book to be borrowed instead of maximum 5.  
+R4          | `return_book_by_patron`       | Not Implemented           | Function always returns `(False, "Book return functionality is not yet implemented")`. Missing logic for borrow verification, updating availability, recording return date, and late fee calculation.  
+R5          | `calculate_late_fee_for_book` | Not Implemented           | Function returns `None`. No late fee rules implemented (0 if on time, 0.50/day, cap at $15).  
+R6          | `search_books_in_catalog`     | Not Implemented           | Current placeholder passes type-based tests but always returns empty. No logic for partial title/author match or exact ISBN match.  
+R7          | `get_patron_status_report`    | Not Implemented           | Returns a dict but no real data. Missing borrowed books, outstanding fees, and borrowing history.  
+
+
+Test summary:
+
+- Framework: `pytest` 
+- Test file: `test_all.py` 
+- Total tests writtenn: 34
+
+Breakdown by Requirement:
+In r1, i had 6 tests, valid input, blank title, long title, invalid ISBN, nonpositive copies, duplicate ISBN. In r2 i had 4 tests which were the following:
+returns list of dicts, inserted book appears, availability constraints, empty catalog handling. In r3 i had 5 tests: successful borrow, invalid patron ID, 
+nonexistent book, unavailable book, over limit. In r4 i had 4 tests:basic return flow, return without borrow, double return, invalid book ID. In r5
+i had 4 tests also: on-time return, short overdue, long overdue, fee cap (they all failed, not implemented). In r6 i had 4 tests, title partial, author 
+partial, exact ISBN, no results. And finally in r7 i had  5 tests, structure returns dict, no activity, with active borrow, fee info, history field.
+
+
+Test Results:
+
+-my code passsed 29 cases, failed 5.
+-test_blocked_after_five_borrows fails because borrow logic allows a 6th book when it shouldnt
+-all 4 of my r5 late fee tests fail because my calculate_late_fee_for_book is not implemented 
