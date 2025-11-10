@@ -5,28 +5,28 @@
 import pytest
 
 #for r1
-from library_service import add_book_to_catalog
+from services.library_service import add_book_to_catalog
 from database import get_book_by_isbn
 
 #for r2
 from database import get_all_books, insert_book
 
 #for r3
-from library_service import borrow_book_by_patron
+from services.library_service import borrow_book_by_patron
 from database import get_book_by_id, get_all_books
 
 #for r4
-from library_service import return_book_by_patron, borrow_book_by_patron
+from services.library_service import return_book_by_patron, borrow_book_by_patron
 from database import get_all_books, get_book_by_id
 
 #for r5
-from library_service import calculate_late_fee_for_book
+from services.library_service import calculate_late_fee_for_book
 
 #for r6
-from library_service import search_books_in_catalog
+from services.library_service import search_books_in_catalog
 
 #for r7
-from library_service import get_patron_status_report, borrow_book_by_patron
+from services.library_service import get_patron_status_report, borrow_book_by_patron
 
 #please ignore the multiple imports since it helped me keep track better
 

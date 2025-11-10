@@ -109,26 +109,26 @@ def return_book_by_patron(patron_id: str, book_id: int) -> Tuple[bool, str]:
     we gon put this right here
     return False, "Book return functionality is not yet implemented."
     """
-    # Validate patron ID
+    #first validate patron ID
     if not patron_id or not patron_id.isdigit() or len(patron_id) != 6:
         return False, "Invalid patron ID."
 
-    # Check if book exists
+    #now check if book exists
     book = get_book_by_id(book_id)
     if not book:
         return False, "Book not found."
 
-    # Check if this patron actually borrowed the book
+    #check if this patron actually borrowed the book
     borrowed_books = get_patron_borrowed_books(patron_id)
     borrowed_ids = [b['book_id'] for b in borrowed_books]
     if book_id not in borrowed_ids:
         return False, "You did not borrow this book."
 
-    # Update return date
+    #update teh return date
     if not update_borrow_record_return_date(patron_id, book_id, datetime.now()):
         return False, "Failed to update return record."
 
-    # Increment availability
+    #increment availability
     if not update_book_availability(book_id, 1):
         return False, "Failed to update book availability."
 
@@ -209,18 +209,18 @@ def get_patron_status_report(patron_id: str) -> Dict:
         "history": []
     }
 
-    # Current active borrows
+    #current active borrows
     borrowed_books = get_patron_borrowed_books(patron_id)
     report["borrowed_books"] = borrowed_books
 
-    # Calculate total fees for active borrows
+    #calculate total fees for active borrows
     total_fees = 0.0
     for b in borrowed_books:
         fee_info = calculate_late_fee_for_book(patron_id, b["book_id"])
         total_fees += fee_info["fee_amount"]
     report["outstanding_fees"] = round(total_fees, 2)
 
-    # Borrow history (returned or active)
+    #borrow history (returned or active)
     conn = get_db_connection()
     records = conn.execute('''
         SELECT br.*, b.title, b.author 
